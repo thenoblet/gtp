@@ -23,14 +23,17 @@ public class MatrixMultiplier {
     try {
       int[][] matrixA = inputMatrix(scanner, "A");
       int[][] matrixB = inputMatrix(scanner, "B");
+
       if (matrixA[0].length != matrixB.length) {
         throw new IllegalArgumentException(
             "Matrix multiplication not possible. Columns of A (" + matrixA[0].length +
                 ") must equal rows of B (" + matrixB.length + ").");
       }
+
       int[][] matrixC = multiplyMatrices(matrixA, matrixB);
       System.out.println("\nMatrix C:");
       printMatrix(matrixC);
+
     } catch (IllegalArgumentException e) {
       System.err.println("Error: " + e.getMessage());
     } finally {
@@ -53,23 +56,30 @@ public class MatrixMultiplier {
   private static int[][] inputMatrix(Scanner scanner, String name) {
     System.out.printf("Enter the number of rows and columns of matrix %s (Format: rows,columns):\n", name);
     System.out.printf("Matrix %s: ", name);
+
     String dimensionInput = scanner.nextLine();
+
     int rows, cols;
+
     try {
       String[] parts = dimensionInput.split(",");
       if (parts.length != 2) {
         throw new IllegalArgumentException("Invalid dimension format for dimensions");
       }
+
       rows = Integer.parseInt(parts[0].trim());
       cols = Integer.parseInt(parts[1].trim());
+
       if (rows <= 0 || cols <= 0) {
         throw new IllegalArgumentException("Rows and columns must be positive integers");
       }
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException("Invalid dimension format. Use 'rows,columns'");
     }
+
     System.out.printf("Enter elements of matrix %s (row-wise, space separated):\n", name);
     int[][] matrix = new int[rows][cols];
+
     for (int i = 0; i < rows; i++) {
       String[] rowValues = scanner.nextLine().trim().split("\\s+");
       if (rowValues.length != cols) {
@@ -96,10 +106,11 @@ public class MatrixMultiplier {
    * @return Resulting matrix C (n×p)
    */
   private static int[][] multiplyMatrices(int[][] a, int[][] b) {
-    int n = a.length; // Rows of matrix A
-    int m = a[0].length; // Columns of matrix A / Rows of matrix B
-    int p = b[0].length; // Columns of matrix B
+    int n = a.length;
+    int m = a[0].length;
+    int p = b[0].length;
     int[][] result = new int[n][p];
+
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < p; j++) {
         for (int k = 0; k < m; k++) {
@@ -129,6 +140,7 @@ public class MatrixMultiplier {
           maxWidth = width;
       }
     }
+
     for (int[] row : matrix) {
       System.out.print("| ");
       for (int val : row) {
